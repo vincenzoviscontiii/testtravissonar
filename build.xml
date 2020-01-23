@@ -3,20 +3,23 @@
               Any modifications will be overwritten.
               To include a user specific buildfile here, simply create one in the same
               directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="HelloWorld4">
+              as the first entry and export the buildfile again. --><project basedir="." default="build" name="SocialMusic">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="../../eclipse/jee-2018-09/eclipse/"/>
+    <property name="ECLIPSE_HOME" value="../../../../Progetti Java/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
-    <path id="HelloWorld4.classpath">
+    <path id="SocialMusic.classpath">
         <pathelement location="bin"/>
+        <pathelement location="../../Librerie DB/mariadb-java-client-1.1.7.jar"/>
+        <pathelement location="../../Librerie DB/mysql-connector-java-8.0.18.jar"/>
+        <pathelement location="../../Librerie email/activation-1.1.jar"/>
+        <pathelement location="../../Librerie email/javax.mail-1.4.5.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
-                <exclude name="**/*.launch"/>
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -31,7 +34,7 @@
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
-            <classpath refid="HelloWorld4.classpath"/>
+            <classpath refid="SocialMusic.classpath"/>
         </javac>
     </target>
     <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
@@ -48,9 +51,19 @@
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
     </target>
-    <target name="hello (3)">
-        <java classname="hello" failonerror="true" fork="yes">
-            <classpath refid="HelloWorld4.classpath"/>
+    <target name="LoginGUI">
+        <java classname="logic.boundary.LoginGUI" failonerror="true" fork="yes">
+            <classpath refid="SocialMusic.classpath"/>
+        </java>
+    </target>
+    <target name="SendMessageGUI">
+        <java classname="logic.utils.WindowManagerGUI" failonerror="true" fork="yes">
+            <classpath refid="SocialMusic.classpath"/>
+        </java>
+    </target>
+    <target name="UserSamplePost">
+        <java classname="UserSamplePost" failonerror="true" fork="yes">
+            <classpath refid="SocialMusic.classpath"/>
         </java>
     </target>
 </project>
